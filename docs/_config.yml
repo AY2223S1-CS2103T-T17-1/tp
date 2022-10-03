@@ -1,4 +1,4 @@
-title: "AB-3"
+title: "TAB"
 theme: minima
 
 header_pages:
@@ -8,7 +8,7 @@ header_pages:
 
 markdown: kramdown
 
-repository: "se-edu/addressbook-level3"
+repository: "AY2223S1-CS2103T-T17-1/tp"
 github_icon: "images/github-icon.png"
 
 plugins:

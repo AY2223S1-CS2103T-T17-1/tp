@@ -257,42 +257,43 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing to mouse interactions
-* is reasonably comfortable using CLI apps
+* Teaching Staff, either a Teaching Assistant or a Professor
+* Teaches multiple classes simultaneously
+* Has a need to manage the contacts of their students
+* Requires to filter their students/contacts by their classes
+* Prefers to filter and profile their students/contacts through other information
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**: Customizing their focus to each student’s needs
 
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
-| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
-| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person               |                                                                        |
-| `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
+| Priority | As a …​            | I want to …​                                                             | So that I can…​                                                                       |
+|---------|--------------------|--------------------------------------------------------------------------|---------------------------------------------------------------------------------------|
+| `* * *` | Teaching Assistant | store all my student’s contacts in one place                             | I can easily contact whoever needs to be contacted.                                   |
+| `* * *` | Teaching Assistant | remove student contacts who dropped the module                           | my address book is updated for the current semester                                   |
+| `* * *` | Professor          | store all my TAs’ contacts in one place                                  |                                                                                       |
+| `* * *` | Professor          | view the availability of the TAs                                         | I know who to reach out to should one be unavailable to teach due to medical reasons. |
+| `* * *` | Professor          | remove contacts of TAs from my address book when they are no longer a TA | my address book is updated for the current semester                                   |
+| `* * *` | New User           | view the summary of all commands                                         |                                                                                       |
+| `* * *` | New User           | go through a tutorial to get started.                                    |                                                                                       |
 
 *{More to be added}*
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `Teachers Address Book (TAB)` and the **Actor** is the `teaching assistant/professor)`, unless specified otherwise)
 
 **Use case: Delete a person**
 
 **MSS**
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  TAB shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  TAB deletes the person
 
     Use case ends.
 
@@ -304,17 +305,57 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. The given index is invalid.
 
-    * 3a1. AddressBook shows an error message.
+    * 3a1. TAB shows an error message.
 
       Use case resumes at step 2.
+  
+**Use case: Add a person**
+
+**MSS**
+
+1.  User enters the command to add a particular person.
+2.  TAB shows that the command is successful and displays the added person.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given student details are invalid.
+  * 1a1. TAB shows an error message.
+  
+  Use case resumes at step 1.
+
+**Use case: Edit a person’s details**
+
+**MSS**
+
+1.  User enters the command to edit a particular person’s details.
+2.  TAB shows that the command is successful and displays the edited person.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The new student details are invalid.
+    * 1a1. TAB shows an error message.
+
+  Use case resumes at step 1.
+
+* 1b. The given index is invalid.
+    * 1b1. TAB shows an error message.
+
+  Use case resumes at step 1.
+
 
 *{More to be added}*
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+1. Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
+2. Should be able to hold up to 1000 students or TAs without a noticeable sluggishness in performance for typical usage.
+3. All user operations should complete within 2 seconds.
+4. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+5. Unauthorised users can only read data without modifying anything.
 
 *{More to be added}*
 
@@ -322,6 +363,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * **Mainstream OS**: Windows, Linux, Unix, OS-X
 * **Private contact detail**: A contact detail that is not meant to be shared with others
+* **Authorised Users**: Professors and Teaching Assistants handling their respective modules
 
 --------------------------------------------------------------------------------------------------------------------
 
