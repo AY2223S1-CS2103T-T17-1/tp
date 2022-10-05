@@ -21,7 +21,7 @@ public class PersonBuilder {
     public static final String DEFAULT_NAME = "Amy Bee";
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
-    public static final String DEFAULT_POSITION = "Student";
+    public static final String DEFAULT_POSITION = "0";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
 
     public static final String DEFAULT_REMARK = "She likes aardvarks.";
@@ -42,7 +42,7 @@ public class PersonBuilder {
         name = new Name(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
-        position = Position.buildPosition(DEFAULT_POSITION);
+        position = Position.buildPosition(Integer.parseInt(DEFAULT_POSITION));
         address = new Address(DEFAULT_ADDRESS);
         remark = new Remark(DEFAULT_REMARK);
         tags = new HashSet<>();
@@ -113,7 +113,7 @@ public class PersonBuilder {
      * Sets the {@code Position} of the {@code Person} that we are building.
      */
     public PersonBuilder withPosition(String position) {
-        this.position = Position.buildPosition(position);
+        this.position = Position.buildPosition(Integer.parseInt(position));
         return this;
     }
 

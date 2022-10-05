@@ -102,7 +102,8 @@ public class ParserUtil {
      *
      * @throws ParseException if the given {@code positionLine} is invalid.
      */
-    public static Position parsePosition(String position) throws ParseException {
+    public static Position parsePosition(String positionLine) throws ParseException {
+        Integer position = Integer.parseInt(positionLine);
         requireNonNull(position);
         if (!Position.isValidPosition(position)) {
             throw new ParseException(Position.MESSAGE_CONSTRAINTS);
