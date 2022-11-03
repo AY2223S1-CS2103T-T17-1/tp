@@ -183,22 +183,21 @@ public class MainApp extends Application {
         } catch (IOException e) {
             logger.warning("Failed to save config file : " + StringUtil.getDetails(e));
         }
-
         return initializedPrefs;
     }
-    private Path[] scanFile(Path[] allFiles)  {
+    private Path[] scanFile(Path[] allFiles) {
         Path[] newFiles = allFiles;
         for (int i = 0; i < allFiles.length; i++) {
-            if (!FileUtil.isFileExists(allFiles[i])){
+            if (!FileUtil.isFileExists(allFiles[i])) {
                 newFiles = removeElement(allFiles, i);
             }
         }
         return newFiles;
     }
 
-    private boolean checkElementIsPresent(Path check, Path[] allFiles)  {
-        for (int i = 0; i < allFiles.length; i++) {
-            if (check.equals(allFiles[i])) {
+    private boolean checkElementIsPresent(Path check, Path[] allFiles) {
+        for (Path allFile : allFiles) {
+            if (check.equals(allFile)) {
                 return true;
             }
         }
