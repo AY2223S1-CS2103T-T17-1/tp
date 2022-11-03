@@ -12,6 +12,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
+import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
@@ -146,9 +147,19 @@ public class MainApp extends Application {
         try {
             Optional<UserPrefs> prefsOptional = storage.readUserPrefs();
             initializedPrefs = prefsOptional.orElse(new UserPrefs());
-            if (initializedPrefs.getAllAddressBookFilePath().length == 0) {
-                initializedPrefs.addAddressBook();
+            Path[] allPaths = initializedPrefs.getAllAddressBookFilePath();
+            if (allPaths.length != 0) {
+                allPaths = scanFile(allPaths);
             }
+            if (allPaths.length == 0) {
+                initializedPrefs.addAddressBook();
+                allPaths = initializedPrefs.getAllAddressBookFilePath();
+            }
+            if (!checkElementIsPresent(initializedPrefs.getAddressBookFilePath(), allPaths)) {
+                initializedPrefs.setAddressBookFilePath(allPaths[0]);
+                initializedPrefs.setStoredIndex(0);
+            }
+            initializedPrefs.setAllAddressBookFilePath(allPaths);
         } catch (DataConversionException e) {
             logger.warning("UserPrefs file at " + prefsFilePath + " is not in the correct format. "
                     + "Using default user prefs");
@@ -166,6 +177,35 @@ public class MainApp extends Application {
         }
 
         return initializedPrefs;
+    }
+    private Path[] scanFile(Path[] allFiles)  {
+        Path[] newFiles = allFiles;
+        for (int i = 0; i < allFiles.length; i++) {
+            if (!FileUtil.isFileExists(allFiles[i])){
+                newFiles = removeElement(allFiles, i);
+            }
+        }
+        return newFiles;
+    }
+
+    private boolean checkElementIsPresent(Path check, Path[] allFiles)  {
+        for (int i = 0; i < allFiles.length; i++) {
+            if (check.equals(allFiles[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private Path[] removeElement(Path[] allFiles, int index) {
+        Path[] newFiles = new Path[allFiles.length - 1];
+        int updatedIndex = 0;
+        for (int i = 0; i < allFiles.length; i++) {
+            if (i != index) {
+                newFiles[updatedIndex++] = allFiles[i];
+            }
+        }
+        return newFiles;
     }
 
     @Override
