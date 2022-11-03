@@ -191,7 +191,7 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Swaps between the Books
+     * Renames the Books
      */
     @FXML
     private void handleRename() {

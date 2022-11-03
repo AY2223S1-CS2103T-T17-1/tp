@@ -78,8 +78,13 @@ public class MainApp extends Application {
         Optional<ReadOnlyAddressBook> addressBookOptional;
         ReadOnlyAddressBook initialData;
         try {
-            addressBookOptional = storage.readAddressBook();
-            if (!addressBookOptional.isPresent()) {
+            if (FileUtil.isFileExists(userPrefs.getAddressBookFilePath())) {
+                addressBookOptional = storage.readAddressBook();
+            } else {
+                addressBookOptional = storage.readAddressBook(userPrefs.getAddressBookFilePath());
+                storage.saveAddressBook(SampleDataUtil.getSampleAddressBook());
+            }
+            if (addressBookOptional.isEmpty()) {
                 logger.info("Data file not found. Will be starting with a sample AddressBook");
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
@@ -150,10 +155,13 @@ public class MainApp extends Application {
             Path[] allPaths = initializedPrefs.getAllAddressBookFilePath();
             if (allPaths.length != 0) {
                 allPaths = scanFile(allPaths);
+                initializedPrefs.setAllAddressBookFilePath(allPaths);
             }
             if (allPaths.length == 0) {
                 initializedPrefs.addAddressBook();
                 allPaths = initializedPrefs.getAllAddressBookFilePath();
+                initializedPrefs.setStoredIndex(0);
+                initializedPrefs.setAddressBookFilePath(allPaths[allPaths.length - 1]);
             }
             if (!checkElementIsPresent(initializedPrefs.getAddressBookFilePath(), allPaths)) {
                 initializedPrefs.setAddressBookFilePath(allPaths[0]);
